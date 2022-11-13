@@ -1,81 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>All my boardgames</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.7">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.1.0/dist/algoliasearch-lite.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.3.1/dist/instantsearch.production.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.1.1/themes/reset-min.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,700&amp;display=swap">
+    <title>All my boardgames</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0" name="viewport">
+    <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.1.0/dist/algoliasearch-lite.umd.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.3.1/dist/instantsearch.production.min.js">
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.1.1/themes/reset-min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="font/font.css" rel="stylesheet">
 </head>
 <body>
-  <header class="search">
-    <img class="logo" src="favicon.ico" height="36" width="36">
-    <div class="search-box" id="search-box"></div>
-    <label>Sort by:</label>
-    <div class="sort-by" id="sort-by"></div>
-    <div class="stats" id="stats"></div>
-    <a class="ref" href="https://www.algolia.com"><img src="search-by-algolia.png" width="130" height="18"></a>
-  </header>
-  <article class="wrapper">
-    <aside class="facets">
-      <div class="facet" id="facet-players" tabindex="0"></div>
-      <div class="facet" id="facet-playing-time" tabindex="0"></div>
-      <div class="facet" id="facet-weight" tabindex="0"></div>
-      <div class="facet" id="facet-categories" tabindex="0"></div>
-      <div class="facet" id="facet-mechanics" tabindex="0"></div>
-      <div class="facet" id="facet-previous-players" tabindex="0"></div>
-      <div class="facet" id="facet-numplays" tabindex="0"></div>
-      <div class="clear-all" id="clear-all"></div>
-    </aside>
-    <main class="results">
-      <div class="hits" id="hits"></div>
-      <div id="pagination"></div>
-    </main>
-  </article>
-
-  <script type="text/html" id="hits-template">
+    <header class="search">
+        <img class="logo" height="36" src="images/favicon.ico" width="36">
+        <div class="search-box" id="search-box"></div><label>Sort by:</label>
+        <div class="sort-by" id="sort-by"></div>
+        <div class="stats" id="stats"></div>
+    </header>
+    <article class="wrapper">
+        <aside class="facets">
+            <div class="facet" id="facet-players" tabindex="0"></div>
+            <div class="facet" id="facet-playing-time" tabindex="0"></div>
+            <div class="facet" id="facet-weight" tabindex="0"></div>
+            <div class="facet" id="facet-categories" tabindex="0"></div>
+            <div class="facet" id="facet-mechanics" tabindex="0"></div>
+            <div class="facet" id="facet-previous-players" tabindex="0"></div>
+            <div class="facet" id="facet-numplays" tabindex="0"></div>
+        </aside>
+        <div class="header-shadow"></div>
+        <aside class="filters">
+            <div class="clear-all" id="clear-all"></div>
+        </aside>
+        <main class="results">
+            <div class="hits" id="hits"></div>
+            <div id="pagination"></div>
+        </main>
+    </article>
+    <script id="hits-template" type="text/html">
     <details class="game-wrapper">
       <summary>
         <div class="game">
-          <img src="{{{ image }}}" data-maincolor="{{{ color }}}" alt="{{{ name }}}">
+          <img src="{{{ image }}}" alt="{{{ name }}}">
         </div>
+        <div class="gamename">{{{ name }}}</div>
       </summary>
       <div class="game-details">
+        <div class="game-details-wrapper">
         <h2 class="heading">
           <a href="https://boardgamegeek.com/boardgame/{{{ id }}}">
             {{# helpers.highlight }}{ "attribute": "name" }{{/ helpers.highlight }}
           </a>
         </h2>
-        <dl class="properties">
+        <dl class="properties-header">
           <div>
-            <dt>Players</dt>
+            <img src="images/ico-players.svg">
             <dd>{{{ players_str }}}</dd>
           </div>
           <div>
-            <dt>Playing time</dt>
+            <img src="images/ico-rating.svg">
+            <dd>{{ rating }}</dd>
+          </div>
+          <div>
+            <img src="images/ico-time.svg">
             <dd>{{ playing_time }}</dd>
           </div>
           <div>
-            <dt>Complexity</dt>
+            <img src="images/ico-complexity.svg">
             <dd>{{ weight }}</dd>
           </div>
+        </dl>
+        <p class="description">
+          {{# helpers.highlight }}{ "attribute": "description" }{{/ helpers.highlight }}
+        </p>
+        <dl class="properties-footer">
           <div>
-            <dt>Tags</dt>
-            <dd>{{ tags_str }}</dd>
-          </div>
-          <div>
-            <dt>Categories</dt>
+            <span>Categories:</span>
             <dd>
               {{# categories_str }}{{ categories_str }}{{/ categories_str }}
               {{^ categories_str}}<em>No categories</em>{{/ categories_str }}
             </dd>
           </div>
           <div>
-            <dt>Mechanics</dt>
+            <span>Mechanics:</span>
             <dd>
               {{# mechanics_str }}{{ mechanics_str }}{{/ mechanics_str }}
               {{^ mechanics_str}}<em>No mechanics</em>{{/ mechanics_str }}
@@ -83,7 +92,7 @@
           </div>
           {{# has_expansions }}
           <div class="expansions">
-            <dt>Expansions</dt>
+            <span>Expansions owned:</span>
             <dd><ul>
               {{# expansions }}
                 <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
@@ -92,13 +101,11 @@
           </div>
           {{/ has_expansions }}
         </dl>
-        <p class="description">
-          {{# helpers.highlight }}{ "attribute": "description" }{{/ helpers.highlight }}
-        </p>
+      </div>
       </div>
     </details>
-  </script>
-
-  <script src="app.js"></script>
+    </script> 
+    <script src="app.js">
+    </script>
 </body>
 </html>

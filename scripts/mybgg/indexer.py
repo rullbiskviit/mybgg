@@ -48,6 +48,7 @@ class Indexer:
         mainIndex.set_settings({
             'replicas': [
                 mainIndex.name + '_rank_ascending',
+                mainIndex.name + '_rating_descending',
                 mainIndex.name + '_numrated_descending',
                 mainIndex.name + '_numowned_descending',
             ]
@@ -55,6 +56,9 @@ class Indexer:
 
         replica_index = client.init_index(mainIndex.name + '_rank_ascending')
         replica_index.set_settings({'ranking': ['asc(rank)']})
+        
+        replica_index = client.init_index(mainIndex.name + '_rating_descending')
+        replica_index.set_settings({'ranking': ['desc(rating)']})
 
         replica_index = client.init_index(mainIndex.name + '_numrated_descending')
         replica_index.set_settings({'ranking': ['desc(usersrated)']})
@@ -89,9 +93,17 @@ class Indexer:
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Recommended with {num}",
             },
+            "supported": {
+                "level1": num_no_plus,
+                "level2": f"{num_no_plus} > Supports with {num}",
+            },
             "expansion": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Expansion allows {num}",
+            },
+            "exp_supported": {
+                "level1": num_no_plus,
+                "level2": f"{num_no_plus} > ExpansionSupport allows {num}",
             },
         }
 

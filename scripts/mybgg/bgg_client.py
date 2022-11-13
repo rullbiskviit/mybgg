@@ -271,9 +271,22 @@ class BGGClient:
                             alias="numowned"
                         ),
                         xml.string(
-                            "statistics/ratings/bayesaverage",
+                            "statistics/ratings/average",
                             attribute="value",
                             alias="rating"
+                        ),
+                        xml.string("playingtime", attribute="value", alias="playing_time", required=False),
+                        xml.integer(
+                            "minplayers",
+                            attribute="value",
+                            alias="min_players",
+                            required=False,
+                        ),
+                        xml.integer(
+                            "maxplayers",
+                            attribute="value",
+                            alias="max_players",
+                            required=False,
                         ),
                         xml.string("playingtime", attribute="value", alias="playing_time"),
                     ],

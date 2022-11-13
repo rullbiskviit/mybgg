@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-bold-webfont.woff2') format('woff2'), url('nunitosans-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-bolditalic-webfont.woff2') format('woff2'), url('nunitosans-bolditalic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-light-webfont.woff2') format('woff2'), url('nunitosans-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-lightitalic-webfont.woff2') format('woff2'), url('nunitosans-lightitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-semibold-webfont.woff2') format('woff2'), url('nunitosans-semibold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nunito_sans';
+    src: url('nunitosans-semibolditalic-webfont.woff2') format('woff2'), url('nunitosans-semibolditalic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
