@@ -104,17 +104,14 @@ function get_widgets(SETTINGS) {
                 label: 'Name',
                 value: SETTINGS.algolia.index_name
             }, {
-                label: 'BGG Rank',
-                value: SETTINGS.algolia.index_name + '_rank_ascending'
-            }, {
-                label: 'Average rating',
-                value: SETTINGS.algolia.index_name + '_rating_descending'
+                label: 'BGG Rating',
+                value: SETTINGS.algolia.index_name + '_rating'
             }, {
                 label: 'Number of ratings',
-                value: SETTINGS.algolia.index_name + '_numrated_descending'
+                value: SETTINGS.algolia.index_name + '_numrated'
             }, {
                 label: 'Number of owners',
-                value: SETTINGS.algolia.index_name + '_numowned_descending'
+                value: SETTINGS.algolia.index_name + '_numowned'
             }]
         }),
         "clear": instantsearch.widgets.clearRefinements({
@@ -217,13 +214,13 @@ function get_widgets(SETTINGS) {
                                 return num;
                             },
                             'expansion': function(num) {
-                                return num + '<span title="With expansion">⊕</span>';
+                                return num + '<span title="With expansion">❖</span>';
                             },
                             'supports': function(num) {
                                 return '<span title="Supported"><em>' + num + '</em></span>';
                             },
                             'expansionsupport': function(num) {
-                                return '<span title="Supported With expansion"><em>' + num + '⊕</em></span>';
+                                return '<span title="Supported with expansion"><em>' + num + '❖</em></span>';
                             },
                         };
                         players.push(type_callback[type](num));
@@ -279,19 +276,16 @@ function init(SETTINGS) {
     var configIndexName = ''
     switch (SETTINGS.algolia.sort_by) {
         case undefined:
+            configIndexName = SETTINGS.algolia.index_name + '_rating'
+            break
         case 'asc(name)':
             configIndexName = SETTINGS.algolia.index_name
             break
-        case 'asc(rank)':
-        case 'desc(rating)':
-            //configIndexName = SETTINGS.algolia.index_name + '_rank_ascending'
-            configIndexName = SETTINGS.algolia.index_name + '_rating_descending'
-            break
         case 'desc(numrated)':
-            configIndexName = SETTINGS.algolia.index_name + '_numrated_descending'
+            configIndexName = SETTINGS.algolia.index_name + '_numrated'
             break
         case 'desc(numowned)':
-            configIndexName = SETTINGS.algolia.index_name + '_numowned_descending'
+            configIndexName = SETTINGS.algolia.index_name + '_numowned'
             break
         default:
             console.error("The provided config value for algolia.sort_by was invalid: " + SETTINGS.algolia.sort_by)

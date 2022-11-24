@@ -47,23 +47,19 @@ class Indexer:
 
         mainIndex.set_settings({
             'replicas': [
-                mainIndex.name + '_rank_ascending',
-                mainIndex.name + '_rating_descending',
-                mainIndex.name + '_numrated_descending',
-                mainIndex.name + '_numowned_descending',
+                mainIndex.name + '_rating',
+                mainIndex.name + '_numrated',
+                mainIndex.name + '_numowned',
             ]
         })
 
-        replica_index = client.init_index(mainIndex.name + '_rank_ascending')
-        replica_index.set_settings({'ranking': ['asc(rank)']})
-        
-        replica_index = client.init_index(mainIndex.name + '_rating_descending')
+        replica_index = client.init_index(mainIndex.name + '_rating')
         replica_index.set_settings({'ranking': ['desc(rating)']})
 
-        replica_index = client.init_index(mainIndex.name + '_numrated_descending')
+        replica_index = client.init_index(mainIndex.name + '_numrated')
         replica_index.set_settings({'ranking': ['desc(usersrated)']})
 
-        replica_index = client.init_index(mainIndex.name + '_numowned_descending')
+        replica_index = client.init_index(mainIndex.name + '_numowned')
         replica_index.set_settings({'ranking': ['desc(numowned)']})
 
     @staticmethod
