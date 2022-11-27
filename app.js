@@ -318,7 +318,7 @@ function init(SETTINGS) {
     function set_bgg_name() {
         var title = SETTINGS.project.title;
         if (!title) {
-            title = "All " + SETTINGS.boardgamegeek.user_name + "'s boardgames";
+            title = SETTINGS.boardgamegeek.user_name + "'s boardgames";
         }
         var title_tag = document.getElementsByTagName("title")[0];
         title_tag.innerHTML = title;
