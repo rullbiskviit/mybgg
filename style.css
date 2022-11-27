@@ -473,8 +473,6 @@ body {
     margin-top: 0;
 }
 
-.facets .clear-all {}
-
 .ais-ClearRefinements-button {
     color: var(--hl);
     padding: 3px 8px;
@@ -508,6 +506,7 @@ body {
     position: absolute;
     z-index: 1;
     display: none;
+    margin-top: -1px;
 }
 
 @media (hover: hover) {
