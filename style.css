@@ -91,12 +91,12 @@ body {
     background: linear-gradient(to bottom, #fafafa 0%, #f5f8fa 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#f5f8fa', GradientType=0);
     justify-content: center;
-    height: 110px;
+    height: 146px;
     background-image: url('images/bg.jpg');
     background-repeat: repeat;
-    background-size: auto 146px;
+    background-size: auto 185px;
     background-attachment: scroll;
-    background-position: -50px -7px;
+    background-position: 105px -38px;
 }
 
 .search label {
