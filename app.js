@@ -83,8 +83,8 @@ function on_render() {
 }
 
 function get_widgets(SETTINGS) {
-    const WEIGHT_LABELS = ["Light", "Light Medium", "Medium", "Medium Heavy", "Heavy"];
-    const PLAYING_TIME_ORDER = ['< 30min', '30min - 1h', '1-2h', '2-3h', '3-4h', '> 4h'];
+    const WEIGHT_LABELS = ["Light", "Medium Light", "Medium", "Medium Heavy", "Heavy"];
+    const PLAYING_TIME_ORDER = ['<30min', '30min–1hr', '1–2hr', '2–3hr', '3–4hr', '>4hr'];
 
     function panel(header) {
         return instantsearch.widgets.panel({
@@ -159,13 +159,6 @@ function get_widgets(SETTINGS) {
                 return PLAYING_TIME_ORDER.indexOf(a.name) - PLAYING_TIME_ORDER.indexOf(b.name);
             },
         }),
-        "refine_previousplayers": panel('Previous players')(instantsearch.widgets.refinementList)({
-            container: '#facet-previous-players',
-            attribute: 'previous_players',
-            operator: 'and',
-            searchable: true,
-            showMore: true,
-        }),
         "refine_numplays": panel('Total plays')(instantsearch.widgets.numericMenu)({
             container: '#facet-numplays',
             attribute: 'numplays',
@@ -198,7 +191,6 @@ function get_widgets(SETTINGS) {
         "hits": instantsearch.widgets.hits({
             container: '#hits',
             transformItems: function(items) {
-                hide_facet_when_no_data('#facet-previous-players', items, 'previous_players');
                 hide_facet_when_no_data('#facet-numplays', items, 'numplays');
                 return items.map(function(game) {
                     players = [];
@@ -214,13 +206,13 @@ function get_widgets(SETTINGS) {
                                 return num;
                             },
                             'expansion': function(num) {
-                                return num + '<span title="With expansion">❖</span>';
+                                return num + '<span title="With expansion">✱</span>';
                             },
                             'supports': function(num) {
                                 return '<span title="Supported"><em>' + num + '</em></span>';
                             },
                             'expansionsupport': function(num) {
-                                return '<span title="Supported with expansion"><em>' + num + '❖</em></span>';
+                                return '<span title="Supported with expansion"><em>' + num + '✱</em></span>';
                             },
                         };
                         players.push(type_callback[type](num));
@@ -235,6 +227,7 @@ function get_widgets(SETTINGS) {
                     game.description = game.description.trim();
                     game.has_expansions = (game.expansions.length > 0);
                     game.rating = game.rating.toFixed(1);
+                    game.weight_rating = game.weight_rating.toFixed(2);
                     return game;
                 });
             },
@@ -310,7 +303,6 @@ function init(SETTINGS) {
         widgets["hits"],
         widgets["stats"],
         widgets["pagination"],
-        widgets["refine_previousplayers"],
         widgets["refine_numplays"]
     ]);
     search.start();

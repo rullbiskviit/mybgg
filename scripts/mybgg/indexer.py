@@ -2,13 +2,9 @@ import io
 import re
 import time
 
-import colorgram
 import requests
 from algoliasearch.search_client import SearchClient
-# Allow colorgram to read truncated files
-from PIL import Image, ImageFile
 
-ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class Indexer:
 
@@ -30,7 +26,6 @@ class Indexer:
                 'players',
                 'weight',
                 'playing_time',
-                'searchable(previous_players)',
                 'numplays',
             ],
             'customRanking': ['asc(name)'],
@@ -179,31 +174,6 @@ class Indexer:
 
             if game["image"]:
                 image_data = self.fetch_image(game["image"])
-                if image_data:
-                    image = Image.open(io.BytesIO(image_data)).convert('RGBA')
-
-                    try_colors = 10
-                    colors = colorgram.extract(image, try_colors)
-                    for i in range(min(try_colors, len(colors))):
-                        color_r, color_g, color_b = colors[i].rgb.r, colors[i].rgb.g, colors[i].rgb.b
-
-                        # Don't return very light or dark colors
-                        luma = (
-                            0.2126 * color_r / 255.0 +
-                            0.7152 * color_g / 255.0 +
-                            0.0722 * color_b / 255.0
-                        )
-                        if (
-                            luma > 0.2 and  # Not too dark
-                            luma < 0.8     # Not too light
-                        ):
-                            break
-
-                    else:
-                        # As a fallback, use the first color
-                        color_r, color_g, color_b = colors[0].rgb.r, colors[0].rgb.g, colors[0].rgb.b
-
-                    game["color"] = f"{color_r}, {color_g}, {color_b}"
 
             game["objectID"] = f"bgg{game['id']}"
 

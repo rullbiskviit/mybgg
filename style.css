@@ -328,9 +328,9 @@ body {
 }
 
 .game img {
-    max-height: 100%;
-    max-width: 100%;
-    border-radius: 2px;
+    max-height: 200px;
+    max-width: 175px;
+    border-radius: 4px;
 }
 
 .game-details {
@@ -655,6 +655,10 @@ body {
         padding: 0;
         height: 130px;
         width: 130px;
+    }
+    .game img {
+        max-height: 100%;
+        max-width: 140px;
     }
     .game-details .game-details-wrapper {
         margin: auto 35px;
